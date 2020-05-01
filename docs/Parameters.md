@@ -31,7 +31,7 @@ Type: string
 
 Possible Values: null
 
-Default: https://raw.githubusercontent.com/Azure/Moodle/master/
+Default: https://raw.githubusercontent.com/edunao-ta/moodle_azure_template/master/
 
 
 ### _artifactsLocationSasToken
