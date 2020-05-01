@@ -182,9 +182,6 @@ set -ex
     PhpVer=$(get_php_version)
     if [ $dbServerType = "mysql" ]; then
         sudo apt-get install -y --allow-unauthenticated php-mysql
-    elif [ $dbServerType = "mssql" ]; then
-        sudo apt-get install -y libapache2-mod-php  # Need this because install_php_mssql_driver tries to update apache2-mod-php settings always (which will fail without this)
-        install_php_mssql_driver
     else
         sudo apt-get install -y --allow-unauthenticated php-pgsql
     fi
