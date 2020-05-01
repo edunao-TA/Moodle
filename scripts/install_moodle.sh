@@ -106,18 +106,18 @@ set -ex
     fi
 
     sudo apt-get -y update                                                   >> /tmp/apt2.log
-    sudo apt-get -y --force-yes install rsyslog git                          >> /tmp/apt3.log
+    sudo apt-get -y --allow-unauthenticated install rsyslog git                          >> /tmp/apt3.log
 
     if [ $fileServerType = "gluster" ]; then
-        sudo apt-get -y --force-yes install glusterfs-client                 >> /tmp/apt3.log
+        sudo apt-get -y --allow-unauthenticated install glusterfs-client                 >> /tmp/apt3.log
     elif [ "$fileServerType" = "azurefiles" ]; then
-        sudo apt-get -y --force-yes install cifs-utils                       >> /tmp/apt3.log
+        sudo apt-get -y --allow-unauthenticated install cifs-utils                       >> /tmp/apt3.log
     fi
 
     if [ $dbServerType = "mysql" ]; then
-        sudo apt-get -y --force-yes install mysql-client >> /tmp/apt3.log
+        sudo apt-get -y --allow-unauthenticated install mysql-client >> /tmp/apt3.log
     elif [ "$dbServerType" = "postgres" ]; then
-        sudo apt-get -y --force-yes install postgresql-client >> /tmp/apt3.log
+        sudo apt-get -y --allow-unauthenticated install postgresql-client >> /tmp/apt3.log
     fi
 
     if [ "$installObjectFsSwitch" = "true" -o "$fileServerType" = "azurefiles" ]; then
@@ -172,21 +172,21 @@ set -ex
     sudo apt-get install -y --fix-missing software-properties-common unzip
 
     # install the entire stack
-    sudo apt-get -y  --force-yes install nginx php-fpm varnish >> /tmp/apt5a.log
-    sudo apt-get -y  --force-yes install php php-cli php-curl php-zip >> /tmp/apt5b.log
+    sudo apt-get -y  --allow-unauthenticated install nginx php-fpm varnish >> /tmp/apt5a.log
+    sudo apt-get -y  --allow-unauthenticated install php php-cli php-curl php-zip >> /tmp/apt5b.log
 
     # Moodle requirements
     sudo apt-get -y update > /dev/null
-    sudo apt-get install -y --force-yes graphviz aspell php-common php-soap php-json php-redis > /tmp/apt6.log
-    sudo apt-get install -y --force-yes php-bcmath php-gd php-xmlrpc php-intl php-xml php-bz2 php-pear php-mbstring php-dev mcrypt >> /tmp/apt6.log
+    sudo apt-get install -y --allow-unauthenticated graphviz aspell php-common php-soap php-json php-redis > /tmp/apt6.log
+    sudo apt-get install -y --allow-unauthenticated php-bcmath php-gd php-xmlrpc php-intl php-xml php-bz2 php-pear php-mbstring php-dev mcrypt >> /tmp/apt6.log
     PhpVer=$(get_php_version)
     if [ $dbServerType = "mysql" ]; then
-        sudo apt-get install -y --force-yes php-mysql
+        sudo apt-get install -y --allow-unauthenticated php-mysql
     elif [ $dbServerType = "mssql" ]; then
         sudo apt-get install -y libapache2-mod-php  # Need this because install_php_mssql_driver tries to update apache2-mod-php settings always (which will fail without this)
         install_php_mssql_driver
     else
-        sudo apt-get install -y --force-yes php-pgsql
+        sudo apt-get install -y --allow-unauthenticated php-pgsql
     fi
 
     # Set up initial moodle dirs
