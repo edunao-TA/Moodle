@@ -214,7 +214,7 @@
             "type": "string"
         },
         "dbLogin": {
-            "defaultValue": "root",
+            "defaultValue": "dbadmin",
             "metadata": {
                 "description": "Database admin username"
             },
