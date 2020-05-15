@@ -408,6 +408,13 @@
             },
             "type": "int"
         },
+        "fileServerDiskType": {
+            "defaultValue": "Premium_LRS",
+            "metadata": {
+                "description": "Storage type for NFS disks"
+            },
+            "type": "string"
+        },
         "fileServerVmSku": {
             "defaultValue": "Standard_DS2_v2",
             "metadata": {
@@ -964,6 +971,9 @@
                     },
                     "ctlrPubIpId": {
                         "value": "[reference('networkTemplate').outputs.ctlrPubIpId.value]"
+                    },
+                    "fileServerDiskType": {
+                        "value": "[parameters('fileServerDiskType')]"
                     },
                     "vmSetupParamsObj": {
                         "value": "[reference('vmSetupParamsTemplate').outputs.vmSetupParamsObj.value]"
