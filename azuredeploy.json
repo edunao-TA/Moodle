@@ -221,7 +221,7 @@
             "type": "string"
         },
         "dbLoginPassword": {
-            "defaultValue": "edMysqlR00t",
+            "defaultValue": "[concat(substring(uniqueString(resourceGroup().id, deployment().name), 2, 11), '*7', toUpper('pfiwb'))]",
             "metadata": {
                 "description": "Database admin password"
             },
