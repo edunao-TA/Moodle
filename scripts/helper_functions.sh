@@ -368,15 +368,18 @@ fi
 EOF
   chmod 500 ${SYNC_SCRIPT_FULLPATH}
 
-  local CRON_DESC_FULLPATH="/etc/cron.d/sync-moodle-html-local-copy"
-  cat <<EOF > ${CRON_DESC_FULLPATH}
-* * * * * root ${SYNC_SCRIPT_FULLPATH}
-EOF
-  chmod 644 ${CRON_DESC_FULLPATH}
+# Following block removed by Sadge because moodle deployment now managed via update-vmss-config
+#
+#  local CRON_DESC_FULLPATH="/etc/cron.d/sync-moodle-html-local-copy"
+#  cat <<EOF > ${CRON_DESC_FULLPATH}
+#* * * * * root ${SYNC_SCRIPT_FULLPATH}
+#EOF
+#  chmod 644 ${CRON_DESC_FULLPATH}
 
   # Addition of a hook for custom script run on VMSS from shared mount to allow customised configuration of the VMSS as required
   local CRON_DESC_FULLPATH2="/etc/cron.d/update-vmss-config"
   cat <<EOF > ${CRON_DESC_FULLPATH2}
+@reboot root [ -f /moodle/bin/on-vmss-reboot ] && /bin/bash /moodle/bin/on-vmss-reboot
 * * * * * root [ -f /moodle/bin/update-vmss-config ] && /bin/bash /moodle/bin/update-vmss-config
 EOF
   chmod 644 ${CRON_DESC_FULLPATH2}

@@ -93,6 +93,13 @@
             },
             "type": "bool"
         },
+        "clusterName": {
+            "defaultValue": "[substring(uniqueString(resourceGroup().id, deployment().name), 3, 6)]",
+            "metadata": {
+                "description": "Cluster Name used in constructing resource ids"
+            },
+            "type": "string"
+        },
         "httpsTermination": {
             "allowedValues": [
                 "VMSS",
@@ -207,9 +214,16 @@
             "type": "string"
         },
         "dbLogin": {
-            "defaultValue": "dbadmin",
+            "defaultValue": "root",
             "metadata": {
                 "description": "Database admin username"
+            },
+            "type": "string"
+        },
+        "dbLoginPassword": {
+            "defaultValue": "edMysqlR00t",
+            "metadata": {
+                "description": "Database admin password"
             },
             "type": "string"
         },
@@ -1080,7 +1094,7 @@
             "ctlrVmName": "[concat('controller-vm-',variables('resourceprefix'))]",
             "ctlrVmSecrets": "[take(variables('ctlrVmSecretsArray'), if(empty(parameters('keyVaultResourceId')), 0, 1))]",
             "dbLogin": "[parameters('dbLogin')]",
-            "dbLoginPassword": "[concat(substring(uniqueString(resourceGroup().id, deployment().name), 2, 11), '*7', toUpper('pfiwb'))]",
+            "dbLoginPassword": "[parameters('dbLoginPassword')]",
             "dbServerType": "[parameters('dbServerType')]",
             "dbUsername": "[concat(parameters('dbLogin'), '@', parameters('dbServerType'), '-', variables('resourceprefix'))]",
             "ddosPlanName": "[concat('ddos-plan-',variables('resourceprefix'))]",
@@ -1228,7 +1242,7 @@
             }
         ],
         "octets": "[split(parameters('vNetAddressSpace'), '.')]",
-        "resourceprefix": "[substring(uniqueString(resourceGroup().id, deployment().name), 3, 6)]",
+        "resourceprefix": "[parameters('clusterName')]",
         "subnetSanPrefix": "[concat( variables('octets')[0], '.', variables('octets')[1], '.', string(add(int(variables('octets')[2]),2)))]",
         "subnetWebRange": "[concat( variables('octets')[0], '.', variables('octets')[1], '.', string(add(int(variables('octets')[2]),0)), '.0/24')]"
     }
